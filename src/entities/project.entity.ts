@@ -19,8 +19,8 @@ export class Project{
     category: string;
 
     @Column({unique: true, nullable: false})
-    files: Image[];
+    files: string;
 
     @Column({unique: true, nullable: false})
-    cover: Image;
+    cover: string;
 }

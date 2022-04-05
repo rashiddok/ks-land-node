@@ -14,7 +14,7 @@ export class ProjectsService {
         return this.projectsRepository.find()
         .then(data=>{
             if(data){
-                return data.map(value=>new ProjectItem(value.title, value.shortTitle, value.cover.cover))
+                return data.map(value=>new ProjectItem(value.title, value.shortTitle, value.cover))
             }
             return []
         })

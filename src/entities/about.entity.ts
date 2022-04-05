@@ -7,7 +7,7 @@ export class About{
     id: number;
 
     @Column({unique: true, nullable: false})
-    photo: Image;
+    photo: string;
 
     @Column({unique: true, nullable: false})
     text: string;
