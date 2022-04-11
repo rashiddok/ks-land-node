@@ -12,15 +12,15 @@ export class Project{
     @Column({unique: true, nullable: false})
     title: string;
 
-    @Column({unique: true, nullable: false})
+    @Column({unique: false, nullable: false})
     description: string;
 
-    @Column({unique: true, nullable: false})
+    @Column({unique: false, nullable: false})
     category: string;
 
-    @Column({unique: true, nullable: false})
+    @Column({unique: false, nullable: false})
     files: string;
 
-    @Column({unique: true, nullable: false})
+    @Column({unique: false, nullable: false})
     cover: string;
 }

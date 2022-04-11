@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectsModule } from './projects/projects.module';
@@ -8,6 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ImageModule } from './image/image.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [
@@ -21,8 +25,20 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'files'),
       serveRoot: '/public'
     }),
-    ProjectsModule, MailModule, AboutModule, ImageModule],
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
+    ProjectsModule, MailModule, AboutModule, ImageModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private usersService: UsersService, private configService: ConfigService) {}
+  async onModuleInit() {
+    const default_username = this.configService.get('ADMIN_USERNAME')
+    if (!(await this.usersService.findOneByUsername(default_username))) {
+      console.log('CREATING DEFAULT USER');
+      await this.usersService.createDefault();
+    }
+  }
+}

@@ -1,8 +1,10 @@
-import { Controller, Get, Param, Post, Response, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Post, Response, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileFieldsInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { ImageService } from './image.service';
 
+@UseGuards(JwtAuthGuard)
 @Controller('image')
 export class ImageController {
     constructor(
