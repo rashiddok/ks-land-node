@@ -9,8 +9,7 @@ import { DeleteResult, Repository } from 'typeorm';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(Users) private usersRepository: Repository<Users>,
-    private configService: ConfigService
+    @InjectRepository(Users) private usersRepository: Repository<Users>
   ) {}
 
 
@@ -34,8 +33,8 @@ export class UsersService {
   }
 
   createDefault(): Promise<Users> {
-    const default_username = this.configService.get('ADMIN_USERNAME')
-    const default_password = this.configService.get('ADMIN_PASSWORD')
+    const default_username = process.env.ADMIN_USERNAME
+    const default_password = process.env.ADMIN_USERNAME
     const defaultUser: IUserLogin = {
       username: default_username,
       password: default_password,

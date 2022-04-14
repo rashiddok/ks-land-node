@@ -8,10 +8,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ImageModule } from './image/image.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule} from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
+import env from 'configuration/env';
 
 @Module({
   imports: [
@@ -26,16 +27,17 @@ import { UsersService } from './users/users.service';
       serveRoot: '/public'
     }),
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
+      load: [env]
     }),
     ProjectsModule, MailModule, AboutModule, ImageModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements OnModuleInit {
-  constructor(private usersService: UsersService, private configService: ConfigService) {}
+  constructor(private usersService: UsersService) {}
   async onModuleInit() {
-    const default_username = this.configService.get('ADMIN_USERNAME')
+    const default_username = process.env.ADMIN_USERNAME
     if (!(await this.usersService.findOneByUsername(default_username))) {
       console.log('CREATING DEFAULT USER');
       await this.usersService.createDefault();
