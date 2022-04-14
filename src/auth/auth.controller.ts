@@ -12,4 +12,9 @@ export class AuthController {
   async login(@Body() body: IUserLogin) {
     return this.authService.login(body);
   }
+
+  @Post('refresh')
+  async refresh(@Body() body: any) {
+    return this.authService.refreshToken(body);
+  }
 }

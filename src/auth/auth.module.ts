@@ -9,16 +9,18 @@ import { JwtStrategy } from './guards/jwt.strategy';
 import { LocalStrategy } from './guards/local.strategy';
 import { RolesGuard } from './guards/roles.guard';
 import { JwtAuthGuard } from './guards/jwt.guard';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   providers: [AuthService, LocalStrategy, JwtStrategy, RolesGuard, JwtAuthGuard],
   controllers: [AuthController],
   imports: [
     UsersModule,
+    ConfigModule.forRoot(),
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '10000s' },
+      signOptions: { expiresIn: `${process.env.JWT_EXPIRES}s` },
     }),
   ],
   exports: [AuthService],
