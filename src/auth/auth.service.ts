@@ -40,7 +40,7 @@ export class AuthService {
     const payload = { ...userData };
     const access_token = this.jwtService.sign(payload);
     const expires = Date.now() + process.env.JWT_EXPIRES;
-    const refreshExpires = Date.now() + process.env.REFRESH_EXPIRES
+    const refreshExpires = Date.now() + +process.env.REFRESH_EXPIRES
     const refresh_token = this.jwtService.sign({ access_token, expires: refreshExpires });
     console.log(`ACCESS EXPIRES: ${expires}, REFRESH: ${refreshExpires}`)
     return {

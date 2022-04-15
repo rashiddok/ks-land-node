@@ -12,7 +12,7 @@ import { ConfigModule} from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
-import env from 'configuration/env';
+import env from './configuration/env';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import env from 'configuration/env';
       synchronize: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'files'),
+      rootPath: join(__dirname,'..','files'),
       serveRoot: '/public'
     }),
     ConfigModule.forRoot({
