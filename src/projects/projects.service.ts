@@ -14,7 +14,7 @@ export class ProjectsService {
         return this.projectsRepository.find()
         .then(data=>{
             if(data){
-                return data.map(value=>new ProjectItem(value.title, value.shortTitle, value.cover))
+                return data.map(value=>new ProjectItem(value.id,value.title, value.shortTitle, value.cover))
             }
             return []
         })
@@ -52,6 +52,7 @@ export class ProjectsService {
     deleteProject(id: number){
         return this.findProjectById(id)
         .then(project=>{
+            console.log(project)
             this.projectsRepository.remove(project)
         })
     }

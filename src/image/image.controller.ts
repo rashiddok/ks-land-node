@@ -50,8 +50,7 @@ export class ImageController {
             })
         })
     )
-    replaceImage(v: any) {
-        console.log(v)
+    replaceImage() {
       return { res: 'ok' };
     }
 
