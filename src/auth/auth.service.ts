@@ -42,7 +42,6 @@ export class AuthService {
     const expires = Date.now() + process.env.JWT_EXPIRES;
     const refreshExpires = Date.now() + +process.env.REFRESH_EXPIRES
     const refresh_token = this.jwtService.sign({ access_token, expires: refreshExpires });
-    console.log(`ACCESS EXPIRES: ${expires}, REFRESH: ${refreshExpires}`)
     return {
       access_token,
       refresh_token,
@@ -54,11 +53,12 @@ export class AuthService {
     const refreshToken: RefreshToken = this.jwtService.decode(
       tokens.refresh_token,
     ) as RefreshToken;
-    console.log(`DATE NOW: ${Date.now()}, REFRESH: ${+refreshToken.expires}`)
-    if(+refreshToken.expires < Date.now()){
-      throw new HttpException('REFRESH TOKEN EXPIRED', 400);
-    }
+    // if(+refreshToken.expires < Date.now()){
+    //   throw new HttpException('REFRESH TOKEN EXPIRED', 400);
+    // }
     if (tokens.access_token !== refreshToken.access_token) {
+      console.log(tokens.access_token)
+      console.log(refreshToken.access_token)
       throw new HttpException('INVALID REFRESH TOKEN', 400);
     }
     const accessTokenData = this.jwtService.decode(
