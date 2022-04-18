@@ -24,7 +24,9 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<EncryptedData> {
+    console.debug(username, pass)
     const user = await this.usersService.findOneByUsername(username);
+    console.debug(JSON.stringify(user))
     if (user !== undefined) {
       const comparePass = await compareHash(pass, user.password);
       if (comparePass) {
